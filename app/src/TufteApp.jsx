@@ -587,6 +587,21 @@ export default function TufteApp() {
             }}>
               "Above all else show the data." — Edward Tufte
             </p>
+            <p style={{
+              fontSize: "12px",
+              color: "#B0A593",
+              margin: "10px 0 0",
+              lineHeight: 1.6,
+            }}>
+              <a
+                href="https://www.threads.com/@arvindang"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#7A6E60", textDecoration: "underline" }}
+              >
+                Message me on Threads
+              </a>
+            </p>
           </div>
         </div>
       </div>
