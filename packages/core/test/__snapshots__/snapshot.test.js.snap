@@ -1,0 +1,109 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`rendered output is stable for every chart type > hbar 1`] = `
+"Revenue by Quarter ($M)
+
+Q1  ██████████████████████████████  36
+Q2  ████████████████████████████████████  43
+Q3  █████████████████████████  30
+Q4  ████████████████████████████████████████████  52"
+`;
+
+exports[`rendered output is stable for every chart type > histogram 1`] = `
+"Response Time Distribution (ms)
+
+   0-50  ██████████████████████████████████████  340
+ 50-100  ███████████████████████████░░░░░░░░░░░  240
+100-150  █████████████████░░░░░░░░░░░░░░░░░░░░░  150
+150-200  █████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  82
+200-250  █████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  41
+250-300  ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  18
+   300+  █░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  7"
+`;
+
+exports[`rendered output is stable for every chart type > line 1`] = `
+"Latency (ms) over 24h
+
+  110 │              ●                     
+  101 │            ││ │                    
+   92 │           ●    ││       ●          
+   84 │          │       ●│   ││ │         
+   75 │        ││          │●│    │        
+   66 │       ●                    ●       
+   57 │      │                      │      
+   48 │                              ││    
+   40 │     │                          ●   
+   31 │   │●                            ││ 
+   22 │●││                                ●
+      └────────────────────────────────────
+       0:008:0012:0016:0020:0024:00"
+`;
+
+exports[`rendered output is stable for every chart type > progress 1`] = `
+"Deployment Pipeline
+
+     Build  [████████████████████████████] 100% ✓
+      Test  [██████████████████████░░░░░░]  80% ◉
+   Staging  [███████████░░░░░░░░░░░░░░░░░]  40% ◉
+Production  [░░░░░░░░░░░░░░░░░░░░░░░░░░░░]   0% ○"
+`;
+
+exports[`rendered output is stable for every chart type > scatter 1`] = `
+"Bug Count vs. Lines Changed
+
+  25 │                                     ·   
+  23 │                                         
+  22 │                                        ·
+  20 │                                   ·     
+  18 │                              ·          
+  17 │                                         
+  15 │                           ·             
+  13 │                         ·               
+  12 │                ·                        
+  10 │                     ·                   
+   8 │            ··                           
+   7 │      ·                                  
+   5 │ ·                                       
+     └─────────────────────────────────────────
+       120                   410     700"
+`;
+
+exports[`rendered output is stable for every chart type > sparkline 1`] = `
+"System Metrics — 24h
+
+    CPU  ▁▂▃▅▇█▇▅▃▂▁▁▂▅▇█▇▅▃▁
+ Memory  ▁▁▁▁▂▄▄▅▆▆▆▇███▆▆▅▄▃
+Network  ▁▁▂▁▁▇█▂▁▁▁▁▃▇█▃▁▁▁▁"
+`;
+
+exports[`rendered output is stable for every chart type > table 1`] = `
+"Sprint Tracker
+
+┌───────────────┬─────────┬────────┬────────┐
+│    Feature    │ Status  │ Sprint │ Owner  │
+├───────────────┼─────────┼────────┼────────┤
+│ Explode View  │  Done   │   12   │ Marcus │
+│  Annotations  │   WIP   │   13   │ Arvin  │
+│ Cross-Section │  Next   │   14   │  Sara  │
+│   Analytics   │ Planned │   15   │  TBD   │
+└───────────────┴─────────┴────────┴────────┘"
+`;
+
+exports[`rendered output is stable for every chart type > vbar 1`] = `
+"Monthly Active Users (k)
+
+  45 │                 ██           
+  41 │                 ██           
+  38 │       ██        ██           
+  34 │       ██        ██   ██      
+  30 │       ██        ██   ██      
+  26 │       ██        ██   ██   ██ 
+  23 │  ██   ██        ██   ██   ██ 
+  19 │  ██   ██   ██   ██   ██   ██ 
+  15 │  ██   ██   ██   ██   ██   ██ 
+  11 │  ██   ██   ██   ██   ██   ██ 
+   8 │  ██   ██   ██   ██   ██   ██ 
+   4 │  ██   ██   ██   ██   ██   ██ 
+   0 └──────────────────────────────
+      Jan  Feb  Mar  Apr  May  Jun"
+`;
