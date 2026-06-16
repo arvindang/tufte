@@ -187,7 +187,24 @@ const sectionStyle = {
   borderTop: "1px solid #E8E0D4",
 };
 
+// Track a CSS media query in React state (SSR-safe).
+function useMediaQuery(query) {
+  const get = () =>
+    typeof window !== "undefined" && window.matchMedia(query).matches;
+  const [matches, setMatches] = useState(get);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mql = window.matchMedia(query);
+    const onChange = () => setMatches(mql.matches);
+    onChange();
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, [query]);
+  return matches;
+}
+
 export default function TufteApp() {
+  const isMobile = useMediaQuery("(max-width: 760px)");
   const [chartType, setChartType] = useState("hbar");
   const [rawData, setRawData] = useState(SAMPLE_DATA.hbar);
   const [chartTitle, setChartTitle] = useState(SAMPLE_TITLES.hbar);
@@ -195,6 +212,12 @@ export default function TufteApp() {
   const [copied, setCopied] = useState(false);
   const [showTip, setShowTip] = useState(true);
   const outputRef = useRef(null);
+
+  // Sections share padding that tightens on small screens.
+  const secStyle = {
+    ...sectionStyle,
+    padding: isMobile ? "44px 22px" : "64px 40px",
+  };
 
   const generate = useCallback(() => {
     const parsed = parseCSVData(rawData);
@@ -285,19 +308,22 @@ export default function TufteApp() {
 
       <div style={{
         display: "flex",
-        height: "min(760px, calc(100vh - 140px))",
-        minHeight: "520px",
+        flexDirection: isMobile ? "column" : "row",
+        height: isMobile ? "auto" : "min(680px, calc(100vh - 240px))",
+        minHeight: isMobile ? 0 : "520px",
       }}>
         {/* Left Panel — Controls */}
         <div style={{
-          width: "340px",
-          minWidth: "340px",
-          borderRight: "1px solid #D4C9B8",
-          padding: "28px 32px",
+          width: isMobile ? "100%" : "340px",
+          minWidth: isMobile ? 0 : "340px",
+          borderRight: isMobile ? "none" : "1px solid #D4C9B8",
+          borderBottom: isMobile ? "1px solid #D4C9B8" : "none",
+          padding: isMobile ? "24px 22px" : "28px 32px",
           display: "flex",
           flexDirection: "column",
           gap: "28px",
-          overflowY: "auto",
+          overflowY: isMobile ? "visible" : "auto",
+          boxSizing: "border-box",
         }}>
           {/* Chart Type Selector */}
           <div>
@@ -426,10 +452,11 @@ export default function TufteApp() {
         {/* Right Panel — Output */}
         <div style={{
           flex: 1,
-          padding: "28px 40px",
+          minWidth: 0,
+          padding: isMobile ? "24px 22px" : "28px 40px",
           display: "flex",
           flexDirection: "column",
-          overflow: "hidden",
+          overflow: isMobile ? "visible" : "hidden",
         }}>
           <div style={{
             display: "flex",
@@ -492,8 +519,22 @@ export default function TufteApp() {
         </div>
       </div>
 
+      {/* Scroll cue — signals there's more below the playground */}
+      <div style={{
+        textAlign: "center",
+        padding: isMobile ? "20px 0 4px" : "16px 0 2px",
+        fontFamily: MONO,
+        fontSize: "10px",
+        letterSpacing: "1.8px",
+        textTransform: "uppercase",
+        color: "#9B8E7E",
+      }}>
+        The format · Install · Integrations · Spec
+        <div style={{ fontSize: "16px", marginTop: "4px", color: "#B0A593" }}>↓</div>
+      </div>
+
       {/* ============ THE FORMAT ============ */}
-      <section style={sectionStyle}>
+      <section style={secStyle}>
         <SectionLabel>The format</SectionLabel>
         <SectionTitle>Write a fenced block. Get a chart.</SectionTitle>
         <p style={{
@@ -535,7 +576,7 @@ export default function TufteApp() {
       </section>
 
       {/* ============ INSTALL ============ */}
-      <section style={sectionStyle}>
+      <section style={secStyle}>
         <SectionLabel>Install</SectionLabel>
         <SectionTitle>Four packages on npm</SectionTitle>
         <p style={{
@@ -589,7 +630,7 @@ export default function TufteApp() {
       </section>
 
       {/* ============ INTEGRATIONS ============ */}
-      <section style={sectionStyle}>
+      <section style={secStyle}>
         <SectionLabel>Integrations</SectionLabel>
         <SectionTitle>Drop it into your Markdown pipeline</SectionTitle>
         <p style={{
@@ -611,7 +652,7 @@ export default function TufteApp() {
       </section>
 
       {/* ============ SPEC ============ */}
-      <section style={sectionStyle}>
+      <section style={secStyle}>
         <SectionLabel>Spec</SectionLabel>
         <SectionTitle>Eight chart types, one tiny grammar</SectionTitle>
         <div style={{
@@ -621,12 +662,14 @@ export default function TufteApp() {
           {CHART_TYPE_DOCS.map(([type, data, desc], i) => (
             <div key={type} style={{
               display: "grid",
-              gridTemplateColumns: "minmax(120px, 1fr) minmax(140px, 1.3fr) 1.4fr",
-              gap: "12px",
-              padding: "10px 16px",
+              gridTemplateColumns: isMobile
+                ? "1fr"
+                : "minmax(120px, 1fr) minmax(140px, 1.3fr) 1.4fr",
+              gap: isMobile ? "2px" : "12px",
+              padding: isMobile ? "12px 16px" : "10px 16px",
               borderTop: i === 0 ? "none" : "1px solid #E8E0D4",
               background: i % 2 ? "#F8F5EE" : "#FFFFFF",
-              alignItems: "center",
+              alignItems: isMobile ? "start" : "center",
             }}>
               <code style={{ fontFamily: MONO, fontSize: "13px", color: "#1A1A1A" }}>{type}</code>
               <code style={{ fontFamily: MONO, fontSize: "12px", color: "#7A6E60" }}>{data}</code>
