@@ -1,0 +1,28 @@
+{
+  "name": "@tufte/markdown-it-chart",
+  "version": "0.1.0",
+  "description": "markdown-it plugin: render ```chart fenced blocks as Tufte-style ASCII charts.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@tufte/chart-core": "0.1.0"
+  },
+  "peerDependencies": {
+    "markdown-it": ">=13"
+  },
+  "devDependencies": {
+    "markdown-it": "^14.1.0",
+    "vitest": "^2.1.8"
+  },
+  "license": "MIT"
+}

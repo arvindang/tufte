@@ -1,0 +1,29 @@
+{
+  "name": "@tufte/remark-chart",
+  "version": "0.1.0",
+  "description": "remark/unified plugin: render ```chart fenced blocks as Tufte-style ASCII charts.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@tufte/chart-core": "0.1.0",
+    "unist-util-visit": "^5.0.0"
+  },
+  "devDependencies": {
+    "rehype-stringify": "^10.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.1",
+    "unified": "^11.0.5",
+    "vitest": "^2.1.8"
+  },
+  "license": "MIT"
+}

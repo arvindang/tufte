@@ -1,0 +1,43 @@
+import { visit } from "unist-util-visit";
+import { render } from "@tufte/chart-core";
+
+// remark/unified plugin: render ```chart fenced blocks as ASCII charts.
+//
+//   import { unified } from "unified";
+//   import remarkParse from "remark-parse";
+//   import remarkChart from "@tufte/remark-chart";
+//   import remarkRehype from "remark-rehype";
+//   import rehypeStringify from "rehype-stringify";
+//
+//   const html = await unified()
+//     .use(remarkParse)
+//     .use(remarkChart)
+//     .use(remarkRehype)
+//     .use(rehypeStringify)
+//     .process(markdown);
+//
+// Options:
+//   className  CSS class on the <pre> wrapper (default "tufte-chart")
+//
+// Every `code` node with language `chart` is turned into a <pre> containing the
+// rendered ASCII (escaped by the hast stringifier — no raw HTML, so no
+// allowDangerousHtml needed). A spec that fails to parse is left untouched.
+export default function remarkChart(options = {}) {
+  const className = options.className || "tufte-chart";
+  return (tree) => {
+    visit(tree, "code", (node) => {
+      if ((node.lang || "") !== "chart") return;
+      let ascii;
+      try {
+        ascii = render(node.value);
+      } catch {
+        return; // leave the broken block as a normal code block
+      }
+      node.data = {
+        hName: "pre",
+        hProperties: { className: [className] },
+        hChildren: [{ type: "text", value: ascii }],
+      };
+    });
+  };
+}
