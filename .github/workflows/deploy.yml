@@ -26,7 +26,12 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
       # Install the whole workspace so @tufte/chart-core links into app.
-      - run: npm ci
+      # Use `npm install` (not `npm ci`): npm doesn't lock rolldown's optional
+      # platform binary (vite 8's bundler) for non-host platforms, so `npm ci`
+      # can't install the Linux binding on the runner. `npm install` resolves the
+      # per-platform binary from the registry. (esbuild locks all platforms, so
+      # the Obsidian release workflow can keep using `npm ci`.)
+      - run: npm install --no-audit --no-fund
       - run: npm run build -w app
       - uses: actions/upload-pages-artifact@v3
         with:
