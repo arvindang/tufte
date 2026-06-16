@@ -61,6 +61,20 @@ const html = await unified()
   .use(rehypeStringify)
   .process(source);`;
 
+const CDN_SNIPPET = `// Zero-dependency ESM — no install, no build step.
+// A pinned copy is self-hosted right here on tufte.ai:
+import { render } from "https://tufte.ai/chart-core@0.1.0.js";
+
+render(\`line "Latency (ms)"
+0:00, 22
+8:00, 68\`);
+
+// Or from an npm CDN once published — esm.sh / jsDelivr / unpkg:
+// import { render } from "https://esm.sh/@tufte/chart-core";`;
+
+const OBSIDIAN_URL =
+  "https://github.com/arvindang/tufte/tree/main/packages/obsidian-chart";
+
 const CHART_TYPE_DOCS = [
   ["hbar / bar", "label, value", "horizontal bars"],
   ["vbar / column", "label, value", "vertical columns"],
@@ -674,6 +688,20 @@ export default function TufteApp() {
             </div>
           ))}
         </div>
+
+        {/* No-install path: import the zero-dep core straight from a CDN. */}
+        <div style={{ marginTop: "32px" }}>
+          <SectionLabel>No install</SectionLabel>
+          <p style={{
+            fontSize: "15px", fontStyle: "italic", color: "#7A6E60",
+            margin: "0 0 16px", lineHeight: 1.6, maxWidth: "640px",
+          }}>
+            <code style={{ fontFamily: MONO, fontSize: "13px" }}>@tufte/chart-core</code> is
+            zero-dependency ESM — import it straight from a CDN in the browser or Deno,
+            with no npm and no build step. A pinned copy is self-hosted right here on tufte.ai.
+          </p>
+          <CodeBox label="browser / deno — from a cdn" code={CDN_SNIPPET} />
+        </div>
       </section>
 
       {/* ============ INTEGRATIONS ============ */}
@@ -695,6 +723,37 @@ export default function TufteApp() {
         }}>
           <CodeBox label="markdown-it — VitePress, Eleventy" code={MARKDOWN_IT_SNIPPET} />
           <CodeBox label="remark — Next, Astro, MDX, Docusaurus" code={REMARK_SNIPPET} />
+        </div>
+
+        {/* Apps: the Obsidian community plugin renders chart blocks in notes. */}
+        <div style={{ marginTop: "32px" }}>
+          <SectionLabel>Notes apps</SectionLabel>
+          <div style={{
+            border: "1px solid #D4C9B8", borderRadius: "6px",
+            padding: "18px 20px", background: "#FFFFFF", maxWidth: "560px",
+            display: "flex", flexDirection: "column", gap: "10px",
+          }}>
+            <a href={OBSIDIAN_URL} target="_blank" rel="noopener noreferrer" style={{
+              fontFamily: MONO, fontSize: "14px", color: "#1A1A1A",
+              textDecoration: "none", fontWeight: 500,
+            }}>
+              Tufte Chart for Obsidian
+            </a>
+            <p style={{ fontSize: "13px", color: "#7A6E60", margin: 0, lineHeight: 1.55 }}>
+              Render <code style={{ fontFamily: MONO, fontSize: "12px" }}>```chart</code> blocks
+              live in your notes — same format, same fail-safe fallback. Drop{" "}
+              <code style={{ fontFamily: MONO, fontSize: "12px" }}>main.js</code>,{" "}
+              <code style={{ fontFamily: MONO, fontSize: "12px" }}>manifest.json</code> and{" "}
+              <code style={{ fontFamily: MONO, fontSize: "12px" }}>styles.css</code> into your
+              vault's <code style={{ fontFamily: MONO, fontSize: "12px" }}>.obsidian/plugins/</code> folder.
+            </p>
+            <a href={OBSIDIAN_URL} target="_blank" rel="noopener noreferrer" style={{
+              fontFamily: MONO, fontSize: "12px", color: "#4A4239",
+              textDecoration: "underline",
+            }}>
+              Install instructions →
+            </a>
+          </div>
         </div>
       </section>
 

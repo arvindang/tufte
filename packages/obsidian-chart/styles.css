@@ -1,0 +1,7 @@
+.tufte-chart {
+  font-family: var(--font-monospace, monospace);
+  white-space: pre;
+  overflow-x: auto;
+  line-height: 1.2;
+  margin: 0;
+}

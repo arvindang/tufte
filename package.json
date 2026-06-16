@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "test": "npm test --workspaces --if-present",
+    "sync:obsidian-manifest": "node scripts/sync-obsidian-manifest.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "npm test --workspaces --if-present && changeset publish"

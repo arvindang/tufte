@@ -112,6 +112,9 @@ Full grammar and directives: **[SPEC.md](packages/core/SPEC.md)**.
 | [`@tufte/markdown-it-chart`](packages/markdown-it-chart) | `npm i @tufte/markdown-it-chart` | markdown-it plugin (VitePress, Eleventy, CMSs). |
 | [`@tufte/remark-chart`](packages/remark-chart) | `npm i @tufte/remark-chart` | remark/unified plugin (Next, Astro, MDX, Docusaurus). |
 
+Not on npm but hosted from this repo: a **[Tufte Chart Obsidian plugin](packages/obsidian-chart)**
+(renders `chart` blocks live in your notes) and a **[zero-install CDN build](#use-from-a-cdn)**.
+
 ---
 
 ## Usage
@@ -163,6 +166,27 @@ const html = await unified()
 Both emit `<pre class="tufte-chart">…</pre>`. A broken spec falls back to a normal
 code block, so a typo never breaks the page.
 
+### Use in Obsidian
+
+The [**Tufte Chart** plugin](packages/obsidian-chart) renders ` ```chart ` blocks
+live in Obsidian's reading view — same format, no build step, same fail-safe
+fallback (a broken spec shows its raw source instead of breaking the note):
+
+````markdown
+```chart
+line "Heart rate"
+0:00, 22
+8:00, 68
+12:00, 74
+```
+````
+
+Install it today by copying `main.js`, `manifest.json`, and `styles.css` into
+`<vault>/.obsidian/plugins/tufte-chart/` and enabling **Tufte Chart** under
+Settings → Community plugins. The plugin is built and released from this repo —
+see the [plugin README](packages/obsidian-chart) for the build/release flow and
+community-store submission.
+
 ### CLI
 
 ```sh
@@ -179,6 +203,34 @@ The pre-render embeds the source in an HTML comment alongside the rendered ASCII
 so the chart stays both readable (anywhere) **and** re-editable. Re-running picks
 up edits to the embedded source. This round-trip is what makes a `chart` block
 degrade gracefully where Markdown can't.
+
+### Use from a CDN
+
+The packages are ESM, and `@tufte/chart-core` has zero dependencies — so it loads
+straight into a browser or Deno with no install and no build step.
+
+**Self-hosted (no npm required).** A pre-bundled, pinned build of the core
+renderer is served off tufte.ai:
+
+```js
+import { render } from "https://tufte.ai/chart-core@0.1.0.js";
+// or always-latest: https://tufte.ai/chart-core.js
+render(`line "Latency"
+0:00, 22
+8:00, 68`);
+```
+
+**npm-backed CDNs** (esm.sh, jsDelivr, unpkg) mirror npm automatically — so they
+require the package to be **published to npm** first:
+
+```js
+import { render } from "https://esm.sh/@tufte/chart-core@0.1.0";
+import { render } from "https://cdn.jsdelivr.net/npm/@tufte/chart-core@0.1.0/src/index.js";
+import { render } from "https://unpkg.com/@tufte/chart-core@0.1.0/src/index.js";
+```
+
+For the markdown-it / remark plugins (which have dependencies), use esm.sh's
+`?bundle` so deps load in one request — see each plugin's README.
 
 ---
 
@@ -199,7 +251,8 @@ packages/core              @tufte/chart-core   — renderer + format + SPEC.md
 packages/cli               @tufte/chart-cli    — pre-render / stdin CLI
 packages/markdown-it-chart @tufte/markdown-it-chart
 packages/remark-chart      @tufte/remark-chart
-app/                       the tufte.ai web app (playground + docs)
+packages/obsidian-chart    Obsidian plugin (built + released here, not on npm)
+app/                       the tufte.ai web app (playground + docs + CDN bundle)
 ```
 
 Releases use [Changesets](https://github.com/changesets/changesets):

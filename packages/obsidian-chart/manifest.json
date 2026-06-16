@@ -1,0 +1,10 @@
+{
+  "id": "tufte-chart",
+  "name": "Tufte Chart",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "Render `chart` code blocks as Tufte-style ASCII charts.",
+  "author": "Arvin Dang",
+  "authorUrl": "https://tufte.ai",
+  "isDesktopOnly": false
+}

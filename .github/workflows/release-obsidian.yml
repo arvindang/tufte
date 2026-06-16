@@ -1,0 +1,50 @@
+name: Release Obsidian plugin
+
+# Bare semver tags (e.g. 1.0.0, no `v` prefix) are reserved for the Obsidian
+# plugin — Obsidian requires the release tag to equal the manifest version.
+# Package releases use Changesets' `@tufte/<name>@x.y.z` tags, so they don't
+# collide with this trigger.
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Version to release (must equal manifest.json version, e.g. 1.0.0)"
+        required: true
+
+permissions:
+  contents: write # create releases + tags
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+      # Install the whole workspace so @tufte/chart-core links into the plugin.
+      - run: npm ci
+      - run: npm run build -w obsidian-tufte-chart
+      - name: Verify tag matches manifest version
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          VERSION=$(node -p "require('./packages/obsidian-chart/manifest.json').version")
+          if [ "$TAG" != "$VERSION" ]; then
+            echo "::error::Release tag ($TAG) does not match manifest version ($VERSION)"
+            exit 1
+          fi
+      - name: Publish release with plugin assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          cd packages/obsidian-chart
+          gh release create "$TAG" \
+            --title "Tufte Chart $TAG" \
+            --notes "Obsidian plugin release $TAG" \
+            main.js manifest.json styles.css

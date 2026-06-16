@@ -7,9 +7,12 @@
   "exports": {
     ".": "./src/index.js"
   },
+  "unpkg": "src/index.js",
+  "jsdelivr": "src/index.js",
   "files": [
     "src",
-    "SPEC.md"
+    "SPEC.md",
+    "README.md"
   ],
   "keywords": [
     "ascii",
