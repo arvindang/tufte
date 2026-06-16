@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, Fragment } from "react";
 import {
   GENERATORS,
   parseCSVData,
@@ -180,11 +180,25 @@ function SectionTitle({ children }) {
   );
 }
 
+// One shared content column so the header, playground and sections all line up.
+const MAXW = "1040px";
+
+// Section anchors for the jump nav (id ↔ label).
+const SECTIONS = [
+  ["format", "The format"],
+  ["install", "Install"],
+  ["integrations", "Integrations"],
+  ["spec", "Spec"],
+];
+
 const sectionStyle = {
-  maxWidth: "920px",
+  maxWidth: MAXW,
+  width: "100%",
+  boxSizing: "border-box",
   margin: "0 auto",
   padding: "64px 40px",
   borderTop: "1px solid #E8E0D4",
+  scrollMarginTop: "24px",
 };
 
 // Track a CSS media query in React state (SSR-safe).
@@ -235,6 +249,12 @@ export default function TufteApp() {
     generate();
   }, [generate]);
 
+  const jumpTo = (e, id) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const handleTypeChange = (id) => {
     setChartType(id);
     setRawData(SAMPLE_DATA[id]);
@@ -272,9 +292,13 @@ export default function TufteApp() {
 
       {/* Header */}
       <header style={{
-        padding: "32px 40px 24px",
         borderBottom: "1px solid #D4C9B8",
       }}>
+        <div style={{
+          maxWidth: MAXW,
+          margin: "0 auto",
+          padding: isMobile ? "26px 22px 22px" : "32px 40px 24px",
+        }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: "12px" }}>
           <h1 style={{
             fontSize: "28px",
@@ -304,13 +328,51 @@ export default function TufteApp() {
         }}>
           Charts that go anywhere text goes.
         </p>
+        </div>
       </header>
 
+      {/* Jump nav — anchor links to each doc section. Sits below the header;
+          on mobile it scrolls horizontally rather than wrapping. */}
+      <nav style={{ borderBottom: "1px solid #D4C9B8" }}>
+        <div style={{
+          maxWidth: MAXW,
+          margin: "0 auto",
+          padding: isMobile ? "12px 22px" : "14px 40px",
+          display: "flex",
+          flexWrap: "nowrap",
+          justifyContent: isMobile ? "flex-start" : "center",
+          alignItems: "center",
+          gap: "6px 14px",
+          fontFamily: MONO,
+          fontSize: "10px",
+          letterSpacing: "1.8px",
+          textTransform: "uppercase",
+          overflowX: "auto",
+          WebkitOverflowScrolling: "touch",
+        }}>
+          {SECTIONS.map(([id, label], i) => (
+            <Fragment key={id}>
+              {i > 0 && <span aria-hidden="true" style={{ color: "#C9BCA8", flexShrink: 0 }}>·</span>}
+              <a
+                href={`#${id}`}
+                onClick={(e) => jumpTo(e, id)}
+                style={{ color: "#7A6E60", textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0 }}
+              >
+                {label}
+              </a>
+            </Fragment>
+          ))}
+        </div>
+      </nav>
+
       <div style={{
+        maxWidth: MAXW,
+        margin: "0 auto",
+        width: "100%",
+        boxSizing: "border-box",
         display: "flex",
         flexDirection: isMobile ? "column" : "row",
-        height: isMobile ? "auto" : "min(680px, calc(100vh - 240px))",
-        minHeight: isMobile ? 0 : "520px",
+        alignItems: isMobile ? "stretch" : "flex-start",
       }}>
         {/* Left Panel — Controls */}
         <div style={{
@@ -322,7 +384,6 @@ export default function TufteApp() {
           display: "flex",
           flexDirection: "column",
           gap: "28px",
-          overflowY: isMobile ? "visible" : "auto",
           boxSizing: "border-box",
         }}>
           {/* Chart Type Selector */}
@@ -420,7 +481,7 @@ export default function TufteApp() {
               onChange={(e) => setRawData(e.target.value)}
               style={{
                 flex: 1,
-                minHeight: "180px",
+                minHeight: "160px",
                 padding: "12px",
                 border: "1px solid #D4C9B8",
                 borderRadius: "4px",
@@ -429,7 +490,7 @@ export default function TufteApp() {
                 fontSize: "12px",
                 lineHeight: 1.7,
                 color: "#2C2C2C",
-                resize: "none",
+                resize: "vertical",
                 outline: "none",
                 boxSizing: "border-box",
               }}
@@ -456,7 +517,7 @@ export default function TufteApp() {
           padding: isMobile ? "24px 22px" : "28px 40px",
           display: "flex",
           flexDirection: "column",
-          overflow: isMobile ? "visible" : "hidden",
+          overflow: "visible",
         }}>
           <div style={{
             display: "flex",
@@ -493,12 +554,12 @@ export default function TufteApp() {
           </div>
 
           <div style={{
-            flex: 1,
+            minHeight: isMobile ? "200px" : "260px",
             background: "#FFFFFF",
             border: "1px solid #D4C9B8",
             borderRadius: "4px",
-            padding: "28px 32px",
-            overflow: "auto",
+            padding: isMobile ? "20px 22px" : "28px 32px",
+            overflowX: "auto",
             boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
           }}>
             <pre
@@ -519,22 +580,8 @@ export default function TufteApp() {
         </div>
       </div>
 
-      {/* Scroll cue — signals there's more below the playground */}
-      <div style={{
-        textAlign: "center",
-        padding: isMobile ? "20px 0 4px" : "16px 0 2px",
-        fontFamily: MONO,
-        fontSize: "10px",
-        letterSpacing: "1.8px",
-        textTransform: "uppercase",
-        color: "#9B8E7E",
-      }}>
-        The format · Install · Integrations · Spec
-        <div style={{ fontSize: "16px", marginTop: "4px", color: "#B0A593" }}>↓</div>
-      </div>
-
       {/* ============ THE FORMAT ============ */}
-      <section style={secStyle}>
+      <section id="format" style={secStyle}>
         <SectionLabel>The format</SectionLabel>
         <SectionTitle>Write a fenced block. Get a chart.</SectionTitle>
         <p style={{
@@ -576,7 +623,7 @@ export default function TufteApp() {
       </section>
 
       {/* ============ INSTALL ============ */}
-      <section style={secStyle}>
+      <section id="install" style={secStyle}>
         <SectionLabel>Install</SectionLabel>
         <SectionTitle>Four packages on npm</SectionTitle>
         <p style={{
@@ -630,7 +677,7 @@ export default function TufteApp() {
       </section>
 
       {/* ============ INTEGRATIONS ============ */}
-      <section style={secStyle}>
+      <section id="integrations" style={secStyle}>
         <SectionLabel>Integrations</SectionLabel>
         <SectionTitle>Drop it into your Markdown pipeline</SectionTitle>
         <p style={{
@@ -652,7 +699,7 @@ export default function TufteApp() {
       </section>
 
       {/* ============ SPEC ============ */}
-      <section style={secStyle}>
+      <section id="spec" style={secStyle}>
         <SectionLabel>Spec</SectionLabel>
         <SectionTitle>Eight chart types, one tiny grammar</SectionTitle>
         <div style={{
@@ -696,27 +743,32 @@ export default function TufteApp() {
       </section>
 
       {/* ============ FOOTER ============ */}
-      <footer style={{
-        borderTop: "1px solid #D4C9B8",
-        padding: "32px 40px",
-        display: "flex",
-        flexWrap: "wrap",
-        gap: "16px",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}>
-        <span style={{
-          fontFamily: SERIF, fontStyle: "italic", fontSize: "13px", color: "#B0A593",
+      <footer style={{ borderTop: "1px solid #D4C9B8" }}>
+        <div style={{
+          maxWidth: MAXW,
+          width: "100%",
+          boxSizing: "border-box",
+          margin: "0 auto",
+          padding: isMobile ? "28px 22px" : "32px 40px",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "16px",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}>
-          “Above all else show the data.” — Edward Tufte
-        </span>
-        <div style={{ display: "flex", gap: "20px", fontFamily: MONO, fontSize: "12px" }}>
-          <a href={REPO_URL} target="_blank" rel="noopener noreferrer"
-             style={{ color: "#7A6E60", textDecoration: "underline" }}>GitHub</a>
-          <a href={NPM_ORG_URL} target="_blank" rel="noopener noreferrer"
-             style={{ color: "#7A6E60", textDecoration: "underline" }}>npm</a>
-          <a href="https://www.threads.com/@arvindang" target="_blank" rel="noopener noreferrer"
-             style={{ color: "#7A6E60", textDecoration: "underline" }}>Threads</a>
+          <span style={{
+            fontFamily: SERIF, fontStyle: "italic", fontSize: "13px", color: "#B0A593",
+          }}>
+            “Above all else show the data.” — Edward Tufte
+          </span>
+          <div style={{ display: "flex", gap: "20px", fontFamily: MONO, fontSize: "12px" }}>
+            <a href={REPO_URL} target="_blank" rel="noopener noreferrer"
+               style={{ color: "#7A6E60", textDecoration: "underline" }}>GitHub</a>
+            <a href={NPM_ORG_URL} target="_blank" rel="noopener noreferrer"
+               style={{ color: "#7A6E60", textDecoration: "underline" }}>npm</a>
+            <a href="https://www.threads.com/@arvindang" target="_blank" rel="noopener noreferrer"
+               style={{ color: "#7A6E60", textDecoration: "underline" }}>Threads</a>
+          </div>
         </div>
       </footer>
     </div>

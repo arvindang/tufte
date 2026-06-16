@@ -4,6 +4,10 @@ node_modules/
 # Build output (rebuilt in CI)
 dist/
 dist-ssr/
+# Generated bundles (rebuilt by their build scripts / CI)
+app/public/chart-core*.js
+packages/obsidian-chart/main.js
+packages/obsidian-chart/*.js.map
 
 # Logs
 *.log
@@ -11,9 +15,15 @@ npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
 
+# Playwright / browser-automation artifacts (screenshots, snapshots, logs)
+.playwright-mcp/
+test-results/
+playwright-report/
+
 # Editor / OS
 .vscode/*
 !.vscode/extensions.json
 .idea/
 .DS_Store
 *.local
+.gstack/
