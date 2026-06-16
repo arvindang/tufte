@@ -11,8 +11,29 @@
     "src",
     "README.md"
   ],
+  "keywords": [
+    "remark",
+    "remark-plugin",
+    "unified",
+    "mdast",
+    "ascii",
+    "chart",
+    "tufte"
+  ],
   "scripts": {
     "test": "vitest run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arvindang/tufte.git",
+    "directory": "packages/remark-chart"
+  },
+  "homepage": "https://tufte.ai",
+  "bugs": "https://github.com/arvindang/tufte/issues",
+  "author": "Arvin Dang",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@tufte/chart-core": "0.1.0",
@@ -24,6 +45,5 @@
     "remark-rehype": "^11.1.1",
     "unified": "^11.0.5",
     "vitest": "^2.1.8"
-  },
-  "license": "MIT"
+  }
 }

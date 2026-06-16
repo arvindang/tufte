@@ -11,11 +11,31 @@
     "src",
     "SPEC.md"
   ],
+  "keywords": [
+    "ascii",
+    "chart",
+    "tufte",
+    "csv",
+    "terminal",
+    "sparkline",
+    "markdown"
+  ],
   "scripts": {
     "test": "vitest run"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arvindang/tufte.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://tufte.ai",
+  "bugs": "https://github.com/arvindang/tufte/issues",
+  "author": "Arvin Dang",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "vitest": "^2.1.8"
-  },
-  "license": "MIT"
+  }
 }

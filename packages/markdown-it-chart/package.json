@@ -11,8 +11,27 @@
     "src",
     "README.md"
   ],
+  "keywords": [
+    "markdown-it",
+    "markdown-it-plugin",
+    "ascii",
+    "chart",
+    "tufte"
+  ],
   "scripts": {
     "test": "vitest run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arvindang/tufte.git",
+    "directory": "packages/markdown-it-chart"
+  },
+  "homepage": "https://tufte.ai",
+  "bugs": "https://github.com/arvindang/tufte/issues",
+  "author": "Arvin Dang",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@tufte/chart-core": "0.1.0"
@@ -23,6 +42,5 @@
   "devDependencies": {
     "markdown-it": "^14.1.0",
     "vitest": "^2.1.8"
-  },
-  "license": "MIT"
+  }
 }

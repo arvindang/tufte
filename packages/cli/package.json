@@ -9,14 +9,33 @@
   "files": [
     "bin"
   ],
+  "keywords": [
+    "ascii",
+    "chart",
+    "tufte",
+    "markdown",
+    "cli",
+    "pre-render"
+  ],
   "scripts": {
     "test": "vitest run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arvindang/tufte.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://tufte.ai",
+  "bugs": "https://github.com/arvindang/tufte/issues",
+  "author": "Arvin Dang",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@tufte/chart-core": "0.1.0"
   },
   "devDependencies": {
     "vitest": "^2.1.8"
-  },
-  "license": "MIT"
+  }
 }

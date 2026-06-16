@@ -7,6 +7,12 @@
     "app"
   ],
   "scripts": {
-    "test": "npm test --workspaces --if-present"
+    "test": "npm test --workspaces --if-present",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "npm test --workspaces --if-present && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.31.0"
   }
 }
