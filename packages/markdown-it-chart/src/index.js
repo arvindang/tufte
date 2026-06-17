@@ -1,4 +1,4 @@
-import { render } from "@tufte/chart-core";
+import { render, renderInline } from "@tufte/chart-core";
 
 // markdown-it plugin: render ```chart fenced blocks as ASCII charts.
 //
@@ -13,6 +13,9 @@ import { render } from "@tufte/chart-core";
 // A code block whose info string is `chart` is rendered to a <pre>. Any other
 // fence falls through to markdown-it's normal rendering. If a chart spec fails
 // to parse, the original code block is rendered unchanged (fail-safe).
+//
+// An inline code span of the form `sparkline: 12 24 36` is rendered to a
+// <code> of glyphs; any other inline code is left untouched (also fail-safe).
 export default function markdownItChart(md, options = {}) {
   const className = options.className || "tufte-chart";
   const defaultFence =
@@ -33,6 +36,24 @@ export default function markdownItChart(md, options = {}) {
     } catch {
       // Broken spec: leave the source block as-is rather than break the page.
       return defaultFence(tokens, idx, opts, env, self);
+    }
+  };
+
+  const defaultInline =
+    md.renderer.rules.code_inline ||
+    ((tokens, idx, opts, _env, self) => self.renderToken(tokens, idx, opts));
+
+  md.renderer.rules.code_inline = function (tokens, idx, opts, env, self) {
+    const content = tokens[idx].content;
+    try {
+      const glyphs = renderInline(content); // throws unless a sparkline span
+      const label = md.utils.escapeHtml(content.trim());
+      return (
+        `<code class="${md.utils.escapeHtml(className + "-spark")}" ` +
+        `title="${label}" aria-label="${label}">${glyphs}</code>`
+      );
+    } catch {
+      return defaultInline(tokens, idx, opts, env, self);
     }
   };
 }

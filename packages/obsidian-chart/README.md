@@ -28,6 +28,9 @@ In reading view this renders to an ASCII line chart. See the
 (`line`, `bar`, `column`, `sparkline`, `table`, `histogram`, `progress`,
 `scatter`) and directives (`@width`, `@height`).
 
+A sparkline is a single line, so it also works **inline**: a one-backtick
+`` `sparkline: 12 24 36` `` span renders to glyphs (`▁▅█`) right in a sentence.
+
 ## Manual installation
 
 1. Build (or download) the plugin artifacts: `main.js`, `manifest.json`, and

@@ -50,8 +50,23 @@ export function generateVBar(data, title, opts = {}) {
   return out.trimEnd();
 }
 
+// The eight sparkline bar glyphs, low → high.
+export const SPARK_BLOCKS = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"];
+
+// numbers → glyph string (no labels/title). Non-numbers are dropped; an empty
+// or all-NaN input yields "". Shared by generateSparkline and inline rendering.
+export function sparkGlyphs(vals) {
+  const nums = vals.filter((n) => !isNaN(n));
+  if (nums.length === 0) return "";
+  const min = Math.min(...nums);
+  const max = Math.max(...nums);
+  const range = max - min || 1;
+  return nums
+    .map((v) => SPARK_BLOCKS[Math.round(((v - min) / range) * (SPARK_BLOCKS.length - 1))])
+    .join("");
+}
+
 export function generateSparkline(data, title) {
-  const blocks = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"];
   let out = title ? `${title}\n\n` : "";
   const maxLabelLen = Math.max(...data.map((d) => d[0].length));
   data.forEach(([label, ...rest]) => {
@@ -60,15 +75,7 @@ export function generateSparkline(data, title) {
       .split(/[\s,]+/)
       .map(Number)
       .filter((n) => !isNaN(n));
-    const min = Math.min(...vals);
-    const max = Math.max(...vals);
-    const range = max - min || 1;
-    const spark = vals
-      .map((v) => {
-        const idx = Math.round(((v - min) / range) * (blocks.length - 1));
-        return blocks[idx];
-      })
-      .join("");
+    const spark = sparkGlyphs(vals);
     const pad = " ".repeat(maxLabelLen - label.length);
     out += `${pad}${label}  ${spark}\n`;
   });

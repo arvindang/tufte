@@ -22,8 +22,16 @@ export {
   generateHistogram,
   generateProgress,
   generateScatter,
+  sparkGlyphs,
+  SPARK_BLOCKS,
 } from "./generators.js";
-export { embedSource, extractSource, renderInPlace } from "./roundtrip.js";
+export { renderInline, parseInlineSpark, INLINE_SPARK_RE } from "./inline.js";
+export {
+  embedSource,
+  extractSource,
+  embedInline,
+  renderInPlace,
+} from "./roundtrip.js";
 
 // chartType string → generator function.
 export const GENERATORS = {

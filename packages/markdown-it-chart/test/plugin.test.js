@@ -31,4 +31,19 @@ describe("markdown-it-chart", () => {
     const html = md2.render(["```chart", "bar", "Q1, 1", "```"].join("\n"));
     expect(html).toContain('<pre class="chart">');
   });
+
+  it("renders an inline `sparkline: …` span to a <code> of glyphs", () => {
+    const html = md.render("CPU `sparkline: 1 5 9` steady.");
+    expect(html).toContain('<code class="tufte-chart-spark"');
+    expect(html).toContain("▁▅█");
+    // the source is kept for accessibility
+    expect(html).toContain('aria-label="sparkline: 1 5 9"');
+    expect(html).toContain('title="sparkline: 1 5 9"');
+  });
+
+  it("leaves ordinary inline code untouched", () => {
+    const html = md.render("Call `render()` here.");
+    expect(html).not.toContain("tufte-chart-spark");
+    expect(html).toContain("render()");
+  });
 });

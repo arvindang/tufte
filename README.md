@@ -62,6 +62,15 @@ Mem  ▁▁▂▄▅▆▇█▇▆
 Net  ▁▁▂▁▇█▂▁▁▃
 ```
 
+**Inline sparklines** — a sparkline is a single line, so it can also flow inside a
+sentence using a one-backtick code span (markdown-it / remark adapters, and the CLI):
+
+```markdown
+CPU held steady `sparkline: 12 24 36 30 18` all morning.
+```
+
+renders as `CPU held steady ▁▅█▇▃ all morning.`
+
 **Tables** (first row is the header):
 
 ````markdown

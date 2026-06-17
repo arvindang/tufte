@@ -53,3 +53,37 @@ describe("round-trip / dual mode", () => {
     expect(rerendered).toContain(expectedChart);
   });
 });
+
+const prose = "CPU held steady `sparkline: 1 5 9` all morning.";
+
+describe("round-trip / inline sparklines", () => {
+  it("converts a raw inline span into an inline carrier", () => {
+    const out = renderInPlace(prose);
+    expect(out).toBe(
+      "CPU held steady <!-- chart:inline sparkline: 1 5 9 -->`▁▅█` all morning."
+    );
+  });
+
+  it("is idempotent — rendering twice yields the same document", () => {
+    const once = renderInPlace(prose);
+    const twice = renderInPlace(once);
+    expect(twice).toBe(once);
+  });
+
+  it("recovers inline source from an inline carrier", () => {
+    const out = renderInPlace(prose);
+    expect(extractSource(out)).toEqual(["sparkline: 1 5 9"]);
+  });
+
+  it("re-renders edited source inside an inline carrier", () => {
+    const out = renderInPlace(prose);
+    const edited = out.replace("sparkline: 1 5 9", "sparkline: 9 5 1");
+    const rerendered = renderInPlace(edited);
+    expect(rerendered).toContain("<!-- chart:inline sparkline: 9 5 1 -->`█▅▁`");
+  });
+
+  it("leaves ordinary inline code untouched", () => {
+    const text = "Use the `render()` helper.";
+    expect(renderInPlace(text)).toBe(text);
+  });
+});

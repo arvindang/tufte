@@ -5,3 +5,8 @@
   line-height: 1.2;
   margin: 0;
 }
+
+/* Inline sparkline glyphs flow with the surrounding text. */
+.tufte-chart-spark {
+  font-family: var(--font-monospace, monospace);
+}

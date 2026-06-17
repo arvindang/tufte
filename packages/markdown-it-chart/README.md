@@ -33,6 +33,13 @@ A code block whose info string is `chart` is rendered as a chart; every other
 fence renders normally. A spec that fails to parse falls back to a plain code
 block, so a typo never breaks the page.
 
+## Inline sparklines
+
+A sparkline is a single line, so it also works inline. A one-backtick
+`` `sparkline: 12 24 36` `` span renders to a `<code class="tufte-chart-spark">`
+of glyphs (`▁▅█`), with the source kept as `title`/`aria-label`. Any other inline
+code is left untouched.
+
 ## Use from a CDN
 
 This plugin is ESM, so it loads directly in the browser. It has a peer

@@ -17,7 +17,9 @@ CI so committed markdown shows real charts everywhere, no plugin required.
 chart render README.md --write
 ```
 
-Without `--write`, the rendered document is printed to stdout.
+Without `--write`, the rendered document is printed to stdout. Inline sparklines
+(a one-backtick `` `sparkline: 12 24 36` `` span) are baked too, into a recoverable
+one-line carrier so the source survives.
 
 ## Pipe a spec
 

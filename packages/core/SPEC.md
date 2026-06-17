@@ -56,6 +56,33 @@ line "Latency (ms) over 24h"
 12:00, 110
 ````
 
+## Inline sparklines
+
+Block charts span whole lines, but a **sparkline** is a single line of glyphs, so
+it can also flow inside a sentence. Inline sparklines live in a one-backtick code
+span prefixed `sparkline:`:
+
+```
+CPU held steady `sparkline: 12 24 36 30 18` all morning.
+```
+
+renders as
+
+```
+CPU held steady ▁▅█▇▃ all morning.
+```
+
+Numbers are separated by whitespace and/or commas. Only `sparkline` is
+inline-capable — every other type produces multiple lines and remains block-only.
+A code span that isn't a valid `sparkline:` source is left as ordinary inline code.
+
+When baked in place (see Round-trip), an inline sparkline becomes a one-line
+carrier — the inline mirror of the block carrier — keeping its source recoverable:
+
+```
+CPU held steady <!-- chart:inline sparkline: 12 24 36 30 18 -->`▁▅█▇▃` all morning.
+```
+
 ## Round-trip (dual mode)
 
 A rendered chart can carry its own source, so it stays both readable and

@@ -31,11 +31,15 @@ Q4  █████████████████████████�
 | `render(blockText)`     | Parse a `chart` block and return ASCII.                       |
 | `parseChartBlock(text)` | Parse to `{ type, title, options, data }`.                    |
 | `renderSpec(spec)`      | Render an already-parsed spec.                                |
-| `renderInPlace(doc)`    | Round-trip: render every ` ```chart ` block in a doc in place. |
+| `renderInline(source)`  | Render an inline `sparkline: 12 24 36` span to glyphs (`▁▅█`). |
+| `renderInPlace(doc)`    | Round-trip: render every ` ```chart ` block (and inline sparkline) in place. |
 | `GENERATORS`            | Map of chart type → generator function.                       |
 
 Chart types: `hbar`/`bar`, `vbar`/`column`, `sparkline`, `line`, `table`,
 `histogram`, `progress`, `scatter`. See [SPEC.md](./SPEC.md) for the full format.
+
+A **sparkline** is a single line, so it also works inline within a sentence via a
+one-backtick `` `sparkline: 12 24 36` `` span.
 
 ## Use from a CDN
 

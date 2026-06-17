@@ -43,4 +43,17 @@ describe("remark-chart", () => {
     });
     expect(html).toContain('<pre class="chart">');
   });
+
+  it("renders an inline `sparkline: …` span to a <code> of glyphs", () => {
+    const html = toHtml("CPU `sparkline: 1 5 9` steady.");
+    expect(html).toContain('<code class="tufte-chart-spark"');
+    expect(html).toContain("▁▅█");
+    expect(html).toContain('title="sparkline: 1 5 9"');
+  });
+
+  it("leaves ordinary inline code untouched", () => {
+    const html = toHtml("Call `render()` here.");
+    expect(html).not.toContain("tufte-chart-spark");
+    expect(html).toContain("render()");
+  });
 });

@@ -3,6 +3,7 @@ import {
   GENERATORS,
   parseCSVData,
   render,
+  renderInline,
   CHART_TYPES,
   SAMPLE_DATA,
   SAMPLE_TITLES,
@@ -41,6 +42,12 @@ const EXAMPLE_SPEC = `line "Latency (ms) over 24h"
 24:00, 25`;
 const EXAMPLE_SOURCE = "```chart\n" + EXAMPLE_SPEC + "\n```";
 const EXAMPLE_OUTPUT = render(EXAMPLE_SPEC);
+
+// A sparkline is a single line, so it can also flow inline within a sentence.
+const INLINE_SPARK_DATA = "sparkline: 12 24 36 30 18";
+const INLINE_SPARK_SOURCE = "CPU held steady `" + INLINE_SPARK_DATA + "` all morning.";
+const INLINE_SPARK_OUTPUT =
+  "CPU held steady " + renderInline(INLINE_SPARK_DATA) + " all morning.";
 
 const MARKDOWN_IT_SNIPPET = `import MarkdownIt from "markdown-it";
 import chart from "@tufte/markdown-it-chart";
@@ -632,6 +639,43 @@ export default function TufteApp() {
             }}>
               {EXAMPLE_OUTPUT}
             </pre>
+          </div>
+        </div>
+
+        {/* Inline sparklines — a single-line chart that flows in prose. */}
+        <p style={{
+          fontSize: "15px", fontStyle: "italic", color: "#7A6E60",
+          margin: "28px 0 16px", lineHeight: 1.6, maxWidth: "640px",
+        }}>
+          A sparkline is a single line, so it also works <em>inline</em> — drop a{" "}
+          <code style={{ fontFamily: MONO, fontSize: "13px" }}>`sparkline: …`</code>{" "}
+          span straight into a sentence.
+        </p>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gap: "20px",
+          alignItems: "start",
+        }}>
+          <CodeBox label="markdown" code={INLINE_SPARK_SOURCE} />
+          <div style={{
+            border: "1px solid #D4C9B8", borderRadius: "6px",
+            background: "#FFFFFF", overflow: "hidden",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+          }}>
+            <div style={{
+              padding: "8px 12px", borderBottom: "1px solid #E8E0D4",
+              fontFamily: MONO, fontSize: "10px", letterSpacing: "1.5px",
+              textTransform: "uppercase", color: "#9B8E7E",
+            }}>
+              renders to
+            </div>
+            <p style={{
+              margin: 0, padding: "14px 16px", fontFamily: MONO,
+              fontSize: "12.5px", lineHeight: 1.6, color: "#1A1A1A",
+            }}>
+              {INLINE_SPARK_OUTPUT}
+            </p>
           </div>
         </div>
       </section>
