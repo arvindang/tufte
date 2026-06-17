@@ -121,8 +121,9 @@ Full grammar and directives: **[SPEC.md](packages/core/SPEC.md)**.
 | [`@tufte/markdown-it-chart`](packages/markdown-it-chart) | `npm i @tufte/markdown-it-chart` | markdown-it plugin (VitePress, Eleventy, CMSs). |
 | [`@tufte/remark-chart`](packages/remark-chart) | `npm i @tufte/remark-chart` | remark/unified plugin (Next, Astro, MDX, Docusaurus). |
 
-Not on npm but hosted from this repo: a **[Tufte Chart Obsidian plugin](packages/obsidian-chart)**
-(renders `chart` blocks live in your notes) and a **[zero-install CDN build](#use-from-a-cdn)**.
+Not on npm: a **[Tufte Chart Obsidian plugin](https://community.obsidian.md/plugins/tufte-chart)**
+(in the Obsidian community store — renders `chart` blocks live in your notes) and a
+**[zero-install CDN build](#use-from-a-cdn)**.
 
 ---
 
@@ -177,9 +178,9 @@ code block, so a typo never breaks the page.
 
 ### Use in Obsidian
 
-The [**Tufte Chart** plugin](packages/obsidian-chart) renders ` ```chart ` blocks
-live in Obsidian's reading view — same format, no build step, same fail-safe
-fallback (a broken spec shows its raw source instead of breaking the note):
+The [**Tufte Chart** plugin](https://community.obsidian.md/plugins/tufte-chart) renders
+` ```chart ` blocks live in Obsidian's reading view — same format, no build step, same
+fail-safe fallback (a broken spec shows its raw source instead of breaking the note):
 
 ````markdown
 ```chart
@@ -190,11 +191,10 @@ line "Heart rate"
 ```
 ````
 
-Install it today by copying `main.js`, `manifest.json`, and `styles.css` into
-`<vault>/.obsidian/plugins/tufte-chart/` and enabling **Tufte Chart** under
-Settings → Community plugins. The plugin is built and released from this repo —
-see the [plugin README](packages/obsidian-chart) for the build/release flow and
-community-store submission.
+Install it from Obsidian directly: **Settings → Community plugins → Browse**, search
+for **Tufte Chart**, and click Install — or [view it in the community store](https://community.obsidian.md/plugins/tufte-chart).
+The plugin is built and released from this repo — see the [plugin README](packages/obsidian-chart)
+for the build/release flow.
 
 ### CLI
 

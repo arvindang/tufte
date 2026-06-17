@@ -80,7 +80,7 @@ render(\`line "Latency (ms)"
 // import { render } from "https://esm.sh/@tufte/chart-core";`;
 
 const OBSIDIAN_URL =
-  "https://github.com/arvindang/tufte/tree/main/packages/obsidian-chart";
+  "https://community.obsidian.md/plugins/tufte-chart";
 
 const CHART_TYPE_DOCS = [
   ["hbar / bar", "label, value", "horizontal bars"],
@@ -785,17 +785,15 @@ export default function TufteApp() {
             </a>
             <p style={{ fontSize: "13px", color: "#7A6E60", margin: 0, lineHeight: 1.55 }}>
               Render <code style={{ fontFamily: MONO, fontSize: "12px" }}>```chart</code> blocks
-              live in your notes — same format, same fail-safe fallback. Drop{" "}
-              <code style={{ fontFamily: MONO, fontSize: "12px" }}>main.js</code>,{" "}
-              <code style={{ fontFamily: MONO, fontSize: "12px" }}>manifest.json</code> and{" "}
-              <code style={{ fontFamily: MONO, fontSize: "12px" }}>styles.css</code> into your
-              vault's <code style={{ fontFamily: MONO, fontSize: "12px" }}>.obsidian/plugins/</code> folder.
+              live in your notes — same format, same fail-safe fallback. Install it from
+              Obsidian's <strong>Community plugins</strong> browser: search for{" "}
+              <strong>Tufte Chart</strong> and click Install.
             </p>
             <a href={OBSIDIAN_URL} target="_blank" rel="noopener noreferrer" style={{
               fontFamily: MONO, fontSize: "12px", color: "#4A4239",
               textDecoration: "underline",
             }}>
-              Install instructions →
+              View in the Obsidian community store →
             </a>
           </div>
         </div>
