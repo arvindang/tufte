@@ -1,7 +1,7 @@
 {
   "name": "app",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tufte/chart-core": "0.1.0",
+    "@tufte/chart-core": "0.2.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },

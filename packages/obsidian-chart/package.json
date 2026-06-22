@@ -1,6 +1,6 @@
 {
   "name": "obsidian-tufte-chart",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Render `chart` fenced code blocks to Tufte-style ASCII charts in Obsidian.",
   "private": true,
   "type": "module",
@@ -18,7 +18,7 @@
   "author": "Arvin Dang",
   "license": "MIT",
   "dependencies": {
-    "@tufte/chart-core": "0.1.0"
+    "@tufte/chart-core": "0.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

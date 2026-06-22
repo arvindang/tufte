@@ -1,6 +1,6 @@
 {
   "name": "@tufte/chart-cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Render `chart` fenced blocks to ASCII — pre-render markdown in place, or pipe a spec via stdin.",
   "type": "module",
   "bin": {
@@ -33,7 +33,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@tufte/chart-core": "0.1.0"
+    "@tufte/chart-core": "0.2.0"
   },
   "devDependencies": {
     "vitest": "^2.1.8"

@@ -1,6 +1,6 @@
 {
   "name": "@tufte/markdown-it-chart",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "markdown-it plugin: render ```chart fenced blocks as Tufte-style ASCII charts.",
   "type": "module",
   "main": "src/index.js",
@@ -36,7 +36,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@tufte/chart-core": "0.1.0"
+    "@tufte/chart-core": "0.2.0"
   },
   "peerDependencies": {
     "markdown-it": ">=13"

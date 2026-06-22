@@ -1,6 +1,6 @@
 {
   "name": "@tufte/chart-core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Deterministic CSV → Tufte-style ASCII chart renderer + the `chart` fenced-block format.",
   "type": "module",
   "main": "src/index.js",
